@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  body {
+    @apply bg-earth-cream text-earth-olive font-sans transition-colors duration-300 relative min-h-screen overflow-x-hidden;
+  }
+  
+  /* The global paper/jute grain texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', 'Playfair Display', serif;
+    @apply tracking-tight font-bold;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fff8ea;
+}
+.dark ::-webkit-scrollbar {
+  background-color: #0f120a;
+}
+::-webkit-scrollbar-track {
+  background-color: #fff8ea;
+}
+.dark ::-webkit-scrollbar-track {
+  background-color: #0f120a;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background-color: #5c6339;
+  border: 2px solid #fff8ea;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #ffc344;
+  border: 2px solid #0f120a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a3243c;
+}
+
+/* Text Selection Styles */
+::selection {
+  @apply bg-earth-crimson text-white;
+}
+
+/* Floating Card / Panel Styling Utilities */
+.glass-panel {
+  @apply bg-white/40 dark:bg-earth-charcoal/40 backdrop-blur-md border border-white/20 dark:border-earth-olive/20;
+}
+
+.glass-card {
+  @apply bg-white/70 dark:bg-earth-charcoal/70 backdrop-blur-lg border border-white/30 dark:border-earth-olive/30 shadow-md;
+}
+
+/* Custom Doodles underlines similar to Pakka.com */
+.doodle-underline {
+  position: relative;
+  display: inline-block;
+}
+.doodle-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 7.00011C50.1667 4.16678 151.4 -0.799886 159 2.00011C118.5 2.66674 33.5 5.1 17.5 9.5C57.6667 6.50008 141.7 1.80021 156.5 7.00011' stroke='%23ffc344' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.doodle-circle {
+  position: relative;
+  display: inline-block;
+  padding: 0 8px;
+}
+.doodle-circle::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 211 129' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M165.847 18.2788C129.731 17.2527 50.8642 26.6517 24.3172 72.4559C-8.86658 129.711 115.983 110.185 162.123 94.4659C189.73 85.0606 206.367 70.569 203.609 54.0923C201.235 39.9071 165.469 23.9761 107.87 37.7587' stroke='%23ffc344' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
