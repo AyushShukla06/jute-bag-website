@@ -66,36 +66,23 @@ export default function Contact() {
     setSubmitError(null);
     
     try {
-      // Temporary testing setup using Web3Forms. 
-      // To activate, replace "YOUR_ACCESS_KEY_HERE" or set VITE_WEB3FORMS_KEY in your .env file
-      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
-      
-      if (accessKey === "YOUR_ACCESS_KEY_HERE") {
-        // Fallback for simulation if key is not configured
-        console.log("Simulating form submission:", form);
-        await new Promise(resolve => setTimeout(resolve, 800));
-        setSubmitted(true);
-        setForm({ name: '', email: '', subject: '', message: '' });
-        return;
-      }
-      
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Direct integration using FormSubmit.co AJAX endpoint pointing to your email address
+      const response = await fetch("https://formsubmit.co/ajax/soulajute@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
         body: JSON.stringify({
-          access_key: accessKey,
           name: form.name,
           email: form.email,
-          subject: form.subject || "Contact Form Submission",
+          _subject: form.subject || "Soulajute Contact Form Submission",
           message: form.message
         })
       });
       
       const result = await response.json();
-      if (response.ok && result.success) {
+      if (response.ok && (result.success === "true" || result.success === true || result.success)) {
         setSubmitted(true);
         setForm({ name: '', email: '', subject: '', message: '' });
       } else {
