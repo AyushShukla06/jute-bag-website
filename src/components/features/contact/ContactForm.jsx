@@ -18,6 +18,8 @@ export default function ContactForm({
   form,
   errors,
   submitted,
+  isSubmitting = false,
+  submitError = null,
   onInputChange,
   onSubmit,
   onResetSubmitted
@@ -56,6 +58,12 @@ export default function ContactForm({
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       
+      {submitError && (
+        <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 dark:bg-red-950/20 dark:border-red-900/30 dark:text-red-400 rounded-lg text-xs font-semibold transition-all">
+          {submitError}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         
         {/* Name Input */}
@@ -66,7 +74,8 @@ export default function ContactForm({
             name="name"
             value={form.name}
             onChange={onInputChange}
-            className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none"
+            disabled={isSubmitting}
+            className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none disabled:opacity-60"
           />
           {errors.name && <p className="text-xs text-red-500 font-semibold">{errors.name}</p>}
         </div>
@@ -79,7 +88,8 @@ export default function ContactForm({
             name="email"
             value={form.email}
             onChange={onInputChange}
-            className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none"
+            disabled={isSubmitting}
+            className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none disabled:opacity-60"
           />
           {errors.email && <p className="text-xs text-red-500 font-semibold">{errors.email}</p>}
         </div>
@@ -94,7 +104,8 @@ export default function ContactForm({
           name="subject"
           value={form.subject}
           onChange={onInputChange}
-          className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none"
+          disabled={isSubmitting}
+          className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none disabled:opacity-60"
         />
       </div>
 
@@ -106,7 +117,8 @@ export default function ContactForm({
           rows="5"
           value={form.message}
           onChange={onInputChange}
-          className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none resize-none"
+          disabled={isSubmitting}
+          className="w-full bg-white dark:bg-earth-charcoal border border-earth-olive/20 dark:border-earth-sand/20 rounded-lg px-3 py-2 text-sm text-earth-olive dark:text-earth-sand focus:outline-none resize-none disabled:opacity-60"
         />
         {errors.message && <p className="text-xs text-red-500 font-semibold">{errors.message}</p>}
       </div>
@@ -114,9 +126,11 @@ export default function ContactForm({
       {/* Submit button */}
       <button
         type="submit"
-        className="w-full sm:w-auto px-6 py-3 bg-earth-olive hover:bg-earth-darkolive dark:bg-earth-amber dark:hover:bg-earth-amber/95 text-earth-beige dark:text-earth-forest font-bold rounded-full text-sm shadow-md flex items-center justify-center gap-2 pt-3 transition-all"
+        disabled={isSubmitting}
+        className="w-full sm:w-auto px-6 py-3 bg-earth-olive hover:bg-earth-darkolive dark:bg-earth-amber dark:hover:bg-earth-amber/95 text-earth-beige dark:text-earth-forest font-bold rounded-full text-sm shadow-md flex items-center justify-center gap-2 pt-3 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        <Send size={16} /> Send Message
+        <Send size={16} className={isSubmitting ? "animate-pulse" : ""} />
+        {isSubmitting ? "Sending..." : "Send Message"}
       </button>
 
     </form>

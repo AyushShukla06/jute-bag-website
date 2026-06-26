@@ -29,6 +29,8 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   /* --- HANDLERS & VALIDATIONS --- */
   
@@ -54,13 +56,56 @@ export default function Contact() {
   };
 
   /**
-   * Submits inquiry inputs to simulation backends.
+   * Submits inquiry inputs.
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    setSubmitted(true);
-    setForm({ name: '', email: '', subject: '', message: '' });
+    
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
+    try {
+      // Temporary testing setup using Web3Forms. 
+      // To activate, replace "YOUR_ACCESS_KEY_HERE" or set VITE_WEB3FORMS_KEY in your .env file
+      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
+      
+      if (accessKey === "YOUR_ACCESS_KEY_HERE") {
+        // Fallback for simulation if key is not configured
+        console.log("Simulating form submission:", form);
+        await new Promise(resolve => setTimeout(resolve, 800));
+        setSubmitted(true);
+        setForm({ name: '', email: '', subject: '', message: '' });
+        return;
+      }
+      
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name,
+          email: form.email,
+          subject: form.subject || "Contact Form Submission",
+          message: form.message
+        })
+      });
+      
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setSubmitted(true);
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitError(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setSubmitError("Failed to connect to the server. Please check your network.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /* ==========================================================================
@@ -87,9 +132,14 @@ export default function Contact() {
             form={form}
             errors={errors}
             submitted={submitted}
+            isSubmitting={isSubmitting}
+            submitError={submitError}
             onInputChange={handleInputChange}
             onSubmit={handleSubmit}
-            onResetSubmitted={() => setSubmitted(false)}
+            onResetSubmitted={() => {
+              setSubmitted(false);
+              setSubmitError(null);
+            }}
           />
         </div>
 
