@@ -1,12 +1,27 @@
+/**
+ * @file App.jsx
+ * @path src/App.jsx
+ * @description Root application orchestrator. Configures global Providers
+ * (Theme, Cart, Wishlist), defines routing navigation paths, and sets up
+ * the default global layouts structures.
+ */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Global Contexts Providers wrappers
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 
-// Pages
+// Global Layout Components wrappers
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+
+// Routing page components entries
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import ProductDetail from './pages/ProductDetail';
@@ -18,7 +33,13 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 
+/* ==========================================================================
+   2. ROOT APPLICATION ORCHESTRATOR
+   ========================================================================== */
 function App() {
+  /* ==========================================================================
+     3. RENDER LOGIC
+     ========================================================================== */
   return (
     <ThemeProvider>
       <CartProvider>
@@ -26,10 +47,10 @@ function App() {
           <Router>
             <div className="flex flex-col min-h-screen">
               
-              {/* Responsive Header Navigation */}
+              {/* Responsive Header Navigation Bar */}
               <Navbar />
 
-              {/* Main Content Template Wrapper */}
+              {/* Main Content Template Wrapper - handles transitions and earth theme classes */}
               <main className="flex-grow bg-earth-cream dark:bg-earth-forest text-earth-olive dark:text-earth-sand transition-colors duration-300">
                 <Routes>
                   <Route path="/" element={<Home />} />

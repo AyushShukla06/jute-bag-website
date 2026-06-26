@@ -1,12 +1,30 @@
+/**
+ * @file Footer.jsx
+ * @path src/components/layout/Footer.jsx
+ * @description Global footer containing value proposition banners, navigation links,
+ * legal information, and newsletter subscription form.
+ */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Send, Sparkles, Shield, RefreshCw } from 'lucide-react';
 
+/* ==========================================================================
+   2. MAIN COMPONENT DEFINITION
+   ========================================================================== */
 export default function Footer() {
+  /* --- STATE MANAGEMENT --- */
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState('');
 
+  /* --- EVENT HANDLERS --- */
+  /**
+   * Validates email string and simulates user newsletter registration.
+   */
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (!email) {
@@ -23,13 +41,17 @@ export default function Footer() {
     setEmail('');
   };
 
+  /* ==========================================================================
+     3. RENDER LOGIC
+     ========================================================================== */
   return (
     <footer className="bg-earth-cream border-t border-earth-olive/15 dark:bg-earth-forest dark:border-earth-sand/15 transition-colors duration-300">
       
-      {/* Features Bar */}
+      {/* 3.1. Features & Value Propositions Banners */}
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 border-b border-earth-olive/10 dark:border-earth-sand/10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           
+          {/* Quality pillar */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="bg-earth-olive/10 dark:bg-earth-sand/10 p-3 rounded-full text-earth-olive dark:text-earth-amber">
               <Sparkles size={24} />
@@ -40,6 +62,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Sustainability pillar */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="bg-earth-olive/10 dark:bg-earth-sand/10 p-3 rounded-full text-earth-olive dark:text-earth-amber">
               <Shield size={24} />
@@ -50,6 +73,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Artisan support pillar */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="bg-earth-olive/10 dark:bg-earth-sand/10 p-3 rounded-full text-earth-olive dark:text-earth-amber">
               <RefreshCw size={24} />
@@ -63,11 +87,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Content */}
+      {/* 3.2. Main Footer Links & Newsletter */}
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           
-          {/* Brand Bio */}
+          {/* Brand Bio Section */}
           <div className="lg:col-span-1 space-y-4">
             <Link to="/" className="flex items-center gap-2 group">
               <div className="bg-earth-olive text-earth-beige p-2 rounded-full dark:bg-earth-amber dark:text-earth-forest transition-colors duration-300">
@@ -82,8 +106,10 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation Links Columns */}
           <div className="grid grid-cols-2 gap-8 lg:col-span-2">
+            
+            {/* Category Collection Links */}
             <div>
               <h3 className="font-display font-bold text-sm uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-4">
                 Shop Collection
@@ -103,6 +129,8 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+
+            {/* Corporate Info & FAQs */}
             <div>
               <h3 className="font-display font-bold text-sm uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-4">
                 Company
@@ -122,9 +150,10 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+
           </div>
 
-          {/* Newsletter Form */}
+          {/* Newsletter Form Panel */}
           <div className="lg:col-span-1">
             <h3 className="font-display font-bold text-sm uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-4">
               Join the Green Circle
@@ -163,7 +192,7 @@ export default function Footer() {
 
         </div>
 
-        {/* Legal bar */}
+        {/* 3.3. Legal Bar & Copyright */}
         <div className="mt-16 pt-8 border-t border-earth-olive/10 dark:border-earth-sand/10 flex flex-col sm:flex-row justify-between items-center text-xs text-earth-olive/60 dark:text-earth-sand/65">
           <p>© {new Date().getFullYear()} SOULAJUTE. Crafted for absolute premium sustainability.</p>
           <div className="flex gap-4 mt-4 sm:mt-0">
@@ -172,6 +201,7 @@ export default function Footer() {
             <a href="#" className="hover:underline">Shipping & Returns</a>
           </div>
         </div>
+
       </div>
     </footer>
   );

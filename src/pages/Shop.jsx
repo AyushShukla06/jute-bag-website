@@ -1,32 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { products } from '../data/products';
-import ProductCard from '../components/ProductCard';
-import { Search, SlidersHorizontal, ArrowUpDown, RotateCcw, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+/**
+ * @file Shop.jsx
+ * @path src/pages/Shop.jsx
+ * @description Catalog page with advanced filter parameters, sorting order configurations,
+ * and search querying logic. Coordinates sidebar selections and mobile filters overlay.
+ */
 
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
+
+// Product data source and reusable showcase card
+import { products } from '../data/products';
+import ProductCard from '../components/ui/ProductCard';
+
+// Modular features components extracted from this view
+import ShopSidebar from '../components/features/shop/ShopSidebar';
+import MobileFiltersModal from '../components/features/shop/MobileFiltersModal';
+
+/* ==========================================================================
+   2. MAIN COMPONENT DEFINITION
+   ========================================================================== */
 export default function Shop() {
+  /* --- ROUTING SEARCH PARAMS HOOK --- */
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
 
+  /* --- STATE MANAGEMENT --- */
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
   const [maxPrice, setMaxPrice] = useState(160);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  // Sync category filter with search query param
-  useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    } else {
-      setSelectedCategory('All');
-    }
-  }, [categoryParam]);
+  // Derive category state directly from query parameters to avoid sync state effects
+  const selectedCategory = categoryParam || 'All';
 
-  const categories = ['All', 'Tote Bags', 'Luxury Handbags', 'Travel Bags', 'Clutch & Pouches', 'Utility Bags', 'Specialty Bags'];
+  /* --- CATALOG FILTER LISTS --- */
+  const categories = [
+    'All', 
+    'Tote Bags', 
+    'Luxury Handbags', 
+    'Travel Bags', 
+    'Clutch & Pouches', 
+    'Utility Bags', 
+    'Specialty Bags'
+  ];
 
-  // Filtering Logic
+  /* ==========================================================================
+     3. FILTERING & SORTING LOGIC
+     ========================================================================== */
+  
+  // 3.1. Main filter chain (checks text match, category matching and price bounds)
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -37,24 +63,32 @@ export default function Shop() {
     return matchesSearch && matchesCategory && matchesPrice;
   });
 
-  // Sorting Logic
+  // 3.2. Order sorting algorithm
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === 'price-low') return a.price - b.price;
     if (sortBy === 'price-high') return b.price - a.price;
     if (sortBy === 'rating') return b.rating - a.rating;
-    return 0; // Default Featured (natural order)
+    return 0; // Default: Featured (inherent sequence)
   });
 
+  /* ==========================================================================
+     4. HANDLERS & CALLBACKS
+     ========================================================================== */
+  
+  /**
+   * Resets all search querying inputs, price boundaries and sorting parameters back to defaults.
+   */
   const handleResetFilters = () => {
     setSearchQuery('');
-    setSelectedCategory('All');
     setMaxPrice(160);
     setSortBy('featured');
     setSearchParams({});
   };
 
+  /**
+   * Toggles category selection and synchronizes standard URL params.
+   */
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
     if (category === 'All') {
       setSearchParams({});
     } else {
@@ -62,10 +96,13 @@ export default function Shop() {
     }
   };
 
+  /* ==========================================================================
+     5. RENDER LOGIC
+     ========================================================================== */
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-colors duration-300">
       
-      {/* Search and Filters Header */}
+      {/* 5.1. Search bar & sorting header row */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         
         {/* Search Input bar */}
@@ -80,8 +117,10 @@ export default function Shop() {
           />
         </div>
 
-        {/* Sort & Mobile filter trigger */}
+        {/* Sorting selection and mobile trigger controls */}
         <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-4">
+          
+          {/* Mobile Filter Button */}
           <button
             onClick={() => setShowMobileFilters(true)}
             className="md:hidden flex items-center gap-2 px-4 py-2.5 bg-earth-olive/5 border border-earth-olive/15 dark:border-earth-sand/15 rounded-xl text-sm text-earth-olive dark:text-earth-sand"
@@ -89,6 +128,7 @@ export default function Shop() {
             <SlidersHorizontal size={16} /> Filters
           </button>
           
+          {/* Dropdown Selector */}
           <div className="flex items-center gap-2">
             <ArrowUpDown size={16} className="text-earth-olive/60 dark:text-earth-sand/65" />
             <select
@@ -102,69 +142,25 @@ export default function Shop() {
               <option value="rating">Top Rated</option>
             </select>
           </div>
+
         </div>
 
       </div>
 
+      {/* 5.2. Core Layout Grid: Sidebar (Desktop) + Product Showcase Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        {/* Desktop Sidebar Filters */}
-        <aside className="hidden lg:block space-y-8 pr-4">
-          
-          {/* Category List */}
-          <div>
-            <h3 className="font-display font-bold text-sm uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-4">
-              Categories
-            </h3>
-            <div className="space-y-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategorySelect(category)}
-                  className={`block w-full text-left py-1 text-sm transition-colors ${
-                    selectedCategory === category
-                      ? 'text-earth-crimson dark:text-earth-amber font-semibold'
-                      : 'text-earth-olive/80 hover:text-earth-crimson dark:text-earth-sand/80 dark:hover:text-earth-amber'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
+        {/* Desktop Sidebar Filter Panel */}
+        <ShopSidebar
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategorySelect={handleCategorySelect}
+          maxPrice={maxPrice}
+          onPriceChange={setMaxPrice}
+          onResetFilters={handleResetFilters}
+        />
 
-          {/* Price Range Slider */}
-          <div>
-            <h3 className="font-display font-bold text-sm uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-4">
-              Price Range
-            </h3>
-            <div className="space-y-2">
-              <input
-                type="range"
-                min="20"
-                max="160"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                className="w-full h-1.5 bg-earth-olive/20 dark:bg-earth-sand/20 rounded-lg appearance-none cursor-pointer accent-earth-olive dark:accent-earth-amber"
-              />
-              <div className="flex justify-between text-xs text-earth-olive/70 dark:text-earth-sand/70">
-                <span>$20</span>
-                <span>Max: ${maxPrice}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Reset Filters */}
-          <button
-            onClick={handleResetFilters}
-            className="flex items-center gap-2 px-4 py-2 border border-earth-olive/30 dark:border-earth-sand/30 hover:bg-earth-olive/5 dark:hover:bg-white/5 rounded-lg text-xs font-semibold text-earth-olive dark:text-earth-sand transition-colors w-full justify-center"
-          >
-            <RotateCcw size={14} /> Clear Filters
-          </button>
-
-        </aside>
-
-        {/* Product Grid */}
+        {/* Product Listing Main Column */}
         <main className="lg:col-span-3">
           {sortedProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -173,8 +169,9 @@ export default function Shop() {
               ))}
             </div>
           ) : (
+            // Fallback Empty State when zero matches exist
             <div className="text-center py-20 bg-earth-olive/5 rounded-2xl border border-dashed border-earth-olive/20">
-              <span className="text-4xl">🍃</span>
+              <span className="text-4xl" role="img" aria-label="eco leaf">🍃</span>
               <h3 className="text-xl font-bold text-earth-olive dark:text-earth-sand mt-4">
                 No Products Found
               </h3>
@@ -193,98 +190,17 @@ export default function Shop() {
 
       </div>
 
-      {/* Mobile Filters Slide-out Modal */}
-      <AnimatePresence>
-        {showMobileFilters && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowMobileFilters(false)}
-              className="fixed inset-0 z-50 bg-black"
-            />
-            {/* Filter Content Card */}
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed inset-y-0 left-0 z-50 w-full max-w-xs bg-earth-cream dark:bg-earth-forest p-6 flex flex-col justify-between overflow-y-auto transition-colors duration-300"
-            >
-              <div className="space-y-8">
-                <div className="flex justify-between items-center border-b border-earth-olive/10 pb-4">
-                  <h2 className="font-display font-extrabold text-lg text-earth-olive dark:text-earth-sand">Filters</h2>
-                  <button onClick={() => setShowMobileFilters(false)}>
-                    <X size={20} />
-                  </button>
-                </div>
-
-                {/* Categories */}
-                <div>
-                  <h3 className="font-display font-bold text-xs uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-3">
-                    Categories
-                  </h3>
-                  <div className="space-y-1">
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          handleCategorySelect(category);
-                          setShowMobileFilters(false);
-                        }}
-                        className={`block w-full text-left py-1.5 text-sm ${
-                          selectedCategory === category
-                            ? 'text-earth-crimson dark:text-earth-amber font-semibold'
-                            : 'text-earth-olive/80 dark:text-earth-sand/80'
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Price range */}
-                <div>
-                  <h3 className="font-display font-bold text-xs uppercase tracking-wider text-earth-crimson dark:text-earth-amber mb-3">
-                    Price Range
-                  </h3>
-                  <div className="space-y-2">
-                    <input
-                      type="range"
-                      min="20"
-                      max="160"
-                      value={maxPrice}
-                      onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                      className="w-full h-1.5 bg-earth-olive/20 dark:bg-earth-sand/20 rounded-lg appearance-none cursor-pointer accent-earth-olive dark:accent-earth-amber"
-                    />
-                    <div className="flex justify-between text-xs text-earth-olive/75 dark:text-earth-sand/75">
-                      <span>$20</span>
-                      <span>Max: ${maxPrice}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom control */}
-              <div className="pt-8">
-                <button
-                  onClick={() => {
-                    handleResetFilters();
-                    setShowMobileFilters(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-3 border border-earth-olive/30 dark:border-earth-sand/30 hover:bg-earth-olive/5 rounded-xl text-xs font-semibold text-earth-olive dark:text-earth-sand transition-colors w-full justify-center"
-                >
-                  <RotateCcw size={14} /> Reset Filters
-                </button>
-              </div>
-
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* 5.3. Slide-out filter modal overlay (Visible on mobile/tablets only) */}
+      <MobileFiltersModal
+        isOpen={showMobileFilters}
+        onClose={() => setShowMobileFilters(false)}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategorySelect={handleCategorySelect}
+        maxPrice={maxPrice}
+        onPriceChange={setMaxPrice}
+        onResetFilters={handleResetFilters}
+      />
 
     </div>
   );
