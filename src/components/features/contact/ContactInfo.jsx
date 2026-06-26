@@ -32,7 +32,7 @@ export default function ContactInfo() {
           <MapPin size={18} className="text-earth-crimson dark:text-earth-amber flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-earth-olive dark:text-earth-sand">Soulajute Guild House</p>
-            <p className="text-xs">48/C Salt Lake Sector V, Kolkata, West Bengal - 700091</p>
+            <p className="text-xs">HNo. 869 Reidganj, Ayodhya, Uttar Pradesh - 224001</p>
           </div>
         </div>
 
@@ -41,8 +41,12 @@ export default function ContactInfo() {
           <Phone size={18} className="text-earth-crimson dark:text-earth-amber flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-earth-olive dark:text-earth-sand">Phone Support</p>
-            <p className="text-xs">+91 33 2490 8219 (Artisan Coordinator)</p>
-            <p className="text-xs">+91 92899 69989 (General Inquiries)</p>
+            <p className="text-xs">
+              <a href="tel:+916394793989" className="hover:underline hover:text-earth-crimson dark:hover:text-earth-amber transition-colors">+91 6394793989</a>
+            </p>
+            <p className="text-xs mt-1">
+              <a href="tel:+919807308327" className="hover:underline hover:text-earth-crimson dark:hover:text-earth-amber transition-colors">+91 9807308327</a>
+            </p>
           </div>
         </div>
 
@@ -51,8 +55,9 @@ export default function ContactInfo() {
           <Mail size={18} className="text-earth-crimson dark:text-earth-amber flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-earth-olive dark:text-earth-sand">Email Support</p>
-            <p className="text-xs">guild@soulajute.com</p>
-            <p className="text-xs">custom@soulajute.com (Corporate Orders)</p>
+            <p className="text-xs">
+              <a href="mailto:soulajute@gmail.com" className="hover:underline hover:text-earth-crimson dark:hover:text-earth-amber transition-colors">soulajute@gmail.com</a>
+            </p>
           </div>
         </div>
 
