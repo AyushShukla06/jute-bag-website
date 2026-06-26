@@ -122,9 +122,9 @@ const drawPolygonHelper = (context, polygon, w, h) => {
     if (ringIndex === 0) {
       context.fill();
     } else {
-      context.globalCompositeOperation = 'destination-out';
+      context.fillStyle = COLORS.ocean;
       context.fill();
-      context.globalCompositeOperation = 'source-over';
+      context.fillStyle = COLORS.continent;
     }
     context.stroke();
   });
@@ -206,7 +206,7 @@ function CanvasGlobeFallback() {
 
     const render = () => {
       const rect = container.getBoundingClientRect();
-      const S = Math.max(250, Math.min(550, rect.width));
+      const S = Math.max(250, Math.min(640, rect.width));
       
       if (canvas.width !== S || canvas.height !== S) {
         canvas.width = S;
@@ -215,7 +215,7 @@ function CanvasGlobeFallback() {
 
       ctx.clearRect(0, 0, S, S);
 
-      const R = (S - 32) / 2;
+      const R = (S - 12) / 2;
       const H_draw = 2 * R;
       const W_draw = 4 * R;
 
@@ -242,8 +242,10 @@ function CanvasGlobeFallback() {
       ctx.drawImage(mapCanvas, x_draw + W_draw, S / 2 - R, W_draw, H_draw);
 
       const elapsed = (Date.now() - startTime) / 1000;
-      const pulseScale = 1.0 + (elapsed * 3.5) % 1.5;
-      const opacity = Math.max(0, 0.8 - ((elapsed * 3.5) % 1.5) / 1.5 * 0.8);
+      const pulsePeriod = 2.5;
+      const progress = (elapsed % pulsePeriod) / pulsePeriod;
+      const pulseScale = 1.0 + progress * 0.8;
+      const opacity = Math.max(0, 0.5 * (1.0 - progress));
 
       LOCATIONS.forEach(loc => {
         const lonFraction = (loc.lon + 180) / 360;
@@ -294,8 +296,8 @@ function CanvasGlobeFallback() {
       if (!isDraggingRef.val) return;
       const deltaX = e.clientX - startXRef.val;
       const rect = container.getBoundingClientRect();
-      const S = Math.max(250, Math.min(450, rect.width));
-      const R = (S - 32) / 2;
+      const S = Math.max(250, Math.min(640, rect.width));
+      const R = (S - 12) / 2;
       const W_draw = 4 * R;
 
       rotationRef.val = (startRotationRef.val - deltaX * 1.2 + W_draw) % W_draw;
@@ -328,11 +330,11 @@ function CanvasGlobeFallback() {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full max-w-[550px] aspect-square flex items-center justify-center mx-auto overflow-visible select-none transition-colors duration-300"
+      className="relative w-full max-w-[640px] aspect-square flex items-center justify-center mx-auto overflow-visible select-none transition-colors duration-300"
     >
       <div 
         style={{ backgroundColor: COLORS.bg }}
-        className="absolute inset-4 rounded-full border border-earth-olive/10 shadow-inner -z-10 animate-pulse-subtle"
+        className="absolute inset-1.5 rounded-full border border-earth-olive/10 shadow-inner -z-10 animate-pulse-subtle"
       />
       <canvas 
         ref={canvasRef}
@@ -408,14 +410,14 @@ export default function Globe() {
       /* --- THREE.JS SCENE SETUP --- */
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      camera.position.z = 6;
+      camera.position.z = 5.1;
 
       // WebGL Renderer creation
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       
       const rect = container.getBoundingClientRect();
-      const size = Math.max(250, Math.min(550, rect.width));
+      const size = Math.max(250, Math.min(640, rect.width));
       renderer.setSize(size, size);
       container.appendChild(renderer.domElement);
 
@@ -519,8 +521,10 @@ export default function Globe() {
         }
 
         const elapsed = clock.getElapsedTime();
-        const scaleVal = 1.0 + (elapsed * 3.5) % 1.5; 
-        const opacityVal = Math.max(0, 0.8 - ((elapsed * 3.5) % 1.5) / 1.5 * 0.8);
+        const pulsePeriod = 2.5;
+        const progress = (elapsed % pulsePeriod) / pulsePeriod;
+        const scaleVal = 1.0 + progress * 0.8;
+        const opacityVal = Math.max(0, 0.5 * (1.0 - progress));
 
         pulsingRings.forEach(ring => {
           if (ring.scale) ring.scale.set(scaleVal, scaleVal, 1);
@@ -535,7 +539,7 @@ export default function Globe() {
       resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           const { width } = entry.contentRect;
-          const boundedSize = Math.max(250, Math.min(550, width));
+          const boundedSize = Math.max(250, Math.min(640, width));
           renderer.setSize(boundedSize, boundedSize);
           camera.aspect = 1;
           camera.updateProjectionMatrix();
@@ -590,12 +594,12 @@ export default function Globe() {
   }
 
   return (
-    <div className="relative w-full max-w-[550px] aspect-square flex items-center justify-center mx-auto overflow-visible select-none transition-colors duration-300">
+    <div className="relative w-full max-w-[640px] aspect-square flex items-center justify-center mx-auto overflow-visible select-none transition-colors duration-300">
       
       {/* Container background and shadow rings */}
       <div 
         style={{ backgroundColor: COLORS.bg }}
-        className="absolute inset-4 rounded-full border border-earth-olive/10 shadow-inner -z-10 animate-pulse-subtle"
+        className="absolute inset-1.5 rounded-full border border-earth-olive/10 shadow-inner -z-10 animate-pulse-subtle"
       />
       
       {/* Three.js canvas mount target container */}

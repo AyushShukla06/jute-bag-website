@@ -15,8 +15,17 @@ export default function ProductionTimeline() {
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Rotating 3D Globe - occupies 6 columns on desktop, stacked on mobile */}
-        <div className="col-span-1 lg:col-span-6 flex justify-center items-center">
+        <div className="col-span-1 lg:col-span-6 flex flex-col justify-center items-center">
           <Globe />
+          <div className="mt-8 text-center animate-pulse-subtle">
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-earth-crimson dark:text-earth-amber block mb-1">
+              Global Impact
+            </span>
+            <h4 className="font-display italic text-2xl text-earth-olive dark:text-earth-sand">
+              Our Growing Reach
+            </h4>
+            <div className="w-16 h-[1.5px] bg-earth-olive/20 dark:bg-earth-sand/20 mx-auto mt-3 rounded-full" />
+          </div>
         </div>
 
         {/* Timeline Steps - occupies 6 columns on desktop */}
