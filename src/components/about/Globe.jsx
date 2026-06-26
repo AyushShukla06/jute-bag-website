@@ -215,7 +215,7 @@ function CanvasGlobeFallback() {
 
       ctx.clearRect(0, 0, S, S);
 
-      const R = (S - 12) / 2;
+      const R = (S - 24) / 2;
       const H_draw = 2 * R;
       const W_draw = 4 * R;
 
@@ -297,7 +297,7 @@ function CanvasGlobeFallback() {
       const deltaX = e.clientX - startXRef.val;
       const rect = container.getBoundingClientRect();
       const S = Math.max(250, Math.min(640, rect.width));
-      const R = (S - 12) / 2;
+      const R = (S - 24) / 2;
       const W_draw = 4 * R;
 
       rotationRef.val = (startRotationRef.val - deltaX * 1.2 + W_draw) % W_draw;
@@ -410,7 +410,7 @@ export default function Globe() {
       /* --- THREE.JS SCENE SETUP --- */
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      camera.position.z = 5.1;
+      camera.position.z = 5.5; // Move camera slightly back to prevent edge clipping
 
       // WebGL Renderer creation
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
