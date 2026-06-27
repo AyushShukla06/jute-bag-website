@@ -58,15 +58,15 @@ export default function ShopSidebar({
         <div className="space-y-2">
           <input
             type="range"
-            min="20"
-            max="160"
+            min="1800"
+            max="15100"
             value={maxPrice}
             onChange={(e) => onPriceChange(parseInt(e.target.value))}
             className="w-full h-1.5 bg-earth-olive/20 dark:bg-earth-sand/20 rounded-lg appearance-none cursor-pointer accent-earth-olive dark:accent-earth-amber"
           />
           <div className="flex justify-between text-xs text-earth-olive/70 dark:text-earth-sand/70">
-            <span>$20</span>
-            <span>Max: ${maxPrice}</span>
+            <span>₹1,800</span>
+            <span>Max: ₹{maxPrice}</span>
           </div>
         </div>
       </div>

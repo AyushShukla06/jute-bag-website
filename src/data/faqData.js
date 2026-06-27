@@ -26,7 +26,7 @@ export const faqs = [
   },
   {
     q: "What is your shipping and return policy?",
-    a: "We offer carbon-neutral shipping nationwide. Orders over $100 ship for free. If you are not satisfied with your hand-loom bag, you can return it within 14 days of delivery for a full refund, provided it is unused and in its original paper packaging.",
+    a: "We offer carbon-neutral shipping nationwide. Orders over ₹9,433.00 ship for free. If you are not satisfied with your hand-loom bag, you can return it within 14 days of delivery for a full refund, provided it is unused and in its original paper packaging.",
     category: "Shipping"
   }
 ];

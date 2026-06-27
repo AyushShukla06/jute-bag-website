@@ -54,7 +54,7 @@ export default function OrderHistory({
                     {order.status}
                   </span>
                   <span className="font-display font-bold text-earth-crimson dark:text-earth-amber text-lg sm:mt-1">
-                    ${order.total.toFixed(2)}
+                    ₹{order.total.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default function OrderHistory({
                       <span className="block text-[10px] text-gray-400">Color: {item.color} | Size: {item.size}</span>
                     </span>
                     <span className="font-bold text-earth-olive dark:text-earth-sand">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}

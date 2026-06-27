@@ -68,7 +68,7 @@ export default function ProductMeta({
 
       {/* 3.3. Pricing Display */}
       <div className="text-3xl font-display font-bold text-earth-crimson dark:text-earth-amber border-b border-earth-olive/10 pb-4">
-        ${product.price.toFixed(2)}
+        ₹{product.price.toFixed(2)}
       </div>
 
       {/* 3.4. Descriptive Text Copy */}
@@ -117,7 +117,7 @@ export default function ProductMeta({
                     : 'bg-white/40 dark:bg-earth-charcoal/40 text-earth-olive dark:text-earth-sand border-earth-olive/20 hover:bg-earth-olive/5'
                 }`}
               >
-                {size === 'Large' ? 'Large (+$15)' : 'Standard'}
+                {size === 'Large' ? 'Large (+₹1414.95)' : 'Standard'}
               </button>
             ))}
           </div>

@@ -143,7 +143,7 @@ export default function PaymentSelector({
       {/* Cash on Delivery visual helper description */}
       {paymentMethod === 'cod' && (
         <p className="text-sm text-earth-olive/80 dark:text-earth-sand/80 pt-4 border-t border-earth-olive/10 text-center animate-fade-in">
-          Cash on Delivery: Payment of <strong>${total.toFixed(2)}</strong> due in cash or UPI upon delivery at your address.
+          Cash on Delivery: Payment of <strong>₹{total.toFixed(2)}</strong> due in cash or UPI upon delivery at your address.
         </p>
       )}
 

@@ -54,7 +54,7 @@ export default function Checkout() {
      ========================================================================== */
   const subtotal = getSubtotal();
   const tax = subtotal * 0.05; // 5% flat eco tax
-  const shipping = subtotal > 100 ? 0 : 9.99; // Free shipping over $100
+  const shipping = subtotal > 9433.00 ? 0 : 942.36; // Free shipping over ₹9,433.00
   const total = subtotal + tax + shipping;
 
   /* ==========================================================================

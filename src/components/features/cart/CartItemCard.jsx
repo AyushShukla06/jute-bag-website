@@ -40,7 +40,7 @@ export default function CartItemCard({
             Color: {item.color} | Size: {item.size}
           </p>
           <p className="text-sm font-semibold text-earth-crimson dark:text-earth-amber mt-1 sm:hidden">
-            ${item.price.toFixed(2)}
+            ₹{item.price.toFixed(2)}
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function CartItemCard({
 
         {/* Pricing calculations */}
         <span className="hidden sm:inline font-display font-semibold text-base text-earth-olive dark:text-earth-sand min-w-[70px] text-right">
-          ${(item.price * item.quantity).toFixed(2)}
+          ₹{(item.price * item.quantity).toFixed(2)}
         </span>
 
         {/* Delete Row Button */}

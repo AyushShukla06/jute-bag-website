@@ -30,7 +30,7 @@ export default function Shop() {
 
   /* --- STATE MANAGEMENT --- */
   const [searchQuery, setSearchQuery] = useState('');
-  const [maxPrice, setMaxPrice] = useState(160);
+  const [maxPrice, setMaxPrice] = useState(15100);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
@@ -80,7 +80,7 @@ export default function Shop() {
    */
   const handleResetFilters = () => {
     setSearchQuery('');
-    setMaxPrice(160);
+    setMaxPrice(15100);
     setSortBy('featured');
     setSearchParams({});
   };

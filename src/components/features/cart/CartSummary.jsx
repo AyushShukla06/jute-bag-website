@@ -38,21 +38,21 @@ export default function CartSummary({
         {/* Raw Subtotal */}
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span className="font-semibold text-earth-olive dark:text-earth-sand">${subtotal.toFixed(2)}</span>
+          <span className="font-semibold text-earth-olive dark:text-earth-sand">₹{subtotal.toFixed(2)}</span>
         </div>
         
         {/* Coupon Discount Deductions */}
         {appliedPromo && (
           <div className="flex justify-between text-green-600 font-semibold animate-fade-in">
             <span className="flex items-center gap-1"><Tag size={12} /> Promo (-20%)</span>
-            <span>-${discountAmount.toFixed(2)}</span>
+            <span>-₹{discountAmount.toFixed(2)}</span>
           </div>
         )}
         
         {/* Eco Tax calculations */}
         <div className="flex justify-between">
           <span>Eco Tax (5%)</span>
-          <span>${ecoTax.toFixed(2)}</span>
+          <span>₹{ecoTax.toFixed(2)}</span>
         </div>
         
         {/* Shipping check logic */}
@@ -62,7 +62,7 @@ export default function CartSummary({
             {shipping === 0 ? (
               <span className="text-green-600 font-bold uppercase text-xs">Free</span>
             ) : (
-              `$${shipping.toFixed(2)}`
+              `₹${shipping.toFixed(2)}`
             )}
           </span>
         </div>
@@ -72,7 +72,7 @@ export default function CartSummary({
       {/* 3.2. Grand Total */}
       <div className="flex justify-between items-center text-lg font-bold text-earth-olive dark:text-earth-sand pt-2">
         <span>Total</span>
-        <span className="text-xl text-earth-crimson dark:text-earth-amber">${total.toFixed(2)}</span>
+        <span className="text-xl text-earth-crimson dark:text-earth-amber">₹{total.toFixed(2)}</span>
       </div>
 
       {/* 3.3. Call-To-Action Link to Checkout */}

@@ -549,7 +549,7 @@ export default function Globe() {
 
     } catch (err) {
       console.warn("WebGL Initialization failed, falling back to 2D canvas:", err);
-      setWebGlError(true);
+      setTimeout(() => setWebGlError(true), 0);
     }
 
     /* --- CLEANUP SEQUENCE --- */

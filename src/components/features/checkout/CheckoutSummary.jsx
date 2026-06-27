@@ -39,7 +39,7 @@ export default function CheckoutSummary({
             <span className="truncate max-w-[200px] text-earth-olive dark:text-earth-sand">
               {item.name} <span className="text-[10px] text-gray-500">x{item.quantity}</span>
             </span>
-            <span className="font-semibold">${(item.price * item.quantity).toFixed(2)}</span>
+            <span className="font-semibold">₹{(item.price * item.quantity).toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -48,22 +48,22 @@ export default function CheckoutSummary({
       <div className="border-t border-earth-olive/10 pt-4 text-sm text-earth-olive/80 dark:text-earth-sand/80 space-y-2">
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span>${subtotal.toFixed(2)}</span>
+          <span>₹{subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span>Eco Tax (5%)</span>
-          <span>${tax.toFixed(2)}</span>
+          <span>₹{tax.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span>Shipping</span>
-          <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+          <span>{shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`}</span>
         </div>
       </div>
 
       {/* Grand Total */}
       <div className="border-t border-earth-olive/10 pt-3 flex justify-between items-center text-base font-bold text-earth-olive dark:text-earth-sand">
         <span>Total</span>
-        <span className="text-lg text-earth-crimson dark:text-earth-amber">${total.toFixed(2)}</span>
+        <span className="text-lg text-earth-crimson dark:text-earth-amber">₹{total.toFixed(2)}</span>
       </div>
 
       {/* 3.3. Submit Trigger Button */}

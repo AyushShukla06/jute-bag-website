@@ -52,7 +52,7 @@ export default function SuccessScreen({
         
         <div className="border-t border-earth-olive/10 pt-3 flex justify-between text-sm">
           <span>Amount Charged</span>
-          <span className="font-bold text-earth-crimson dark:text-earth-amber">${total.toFixed(2)}</span>
+          <span className="font-bold text-earth-crimson dark:text-earth-amber">₹{total.toFixed(2)}</span>
         </div>
 
       </div>

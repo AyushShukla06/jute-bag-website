@@ -3,7 +3,7 @@ export const products = [
     id: 1,
     name: "The Sylvan Tote",
     category: "Tote Bags",
-    price: 79.00,
+    price: 7452.07,
     rating: 4.8,
     reviewsCount: 32,
     images: [
@@ -30,7 +30,7 @@ export const products = [
     id: 2,
     name: "Aurelia Handbag",
     category: "Luxury Handbags",
-    price: 125.00,
+    price: 11791.25,
     rating: 4.9,
     reviewsCount: 48,
     images: [
@@ -57,7 +57,7 @@ export const products = [
     id: 3,
     name: "Virdis Travel Duffel",
     category: "Travel Bags",
-    price: 149.00,
+    price: 14055.17,
     rating: 4.7,
     reviewsCount: 18,
     images: [
@@ -84,7 +84,7 @@ export const products = [
     id: 4,
     name: "The Terra Clutch",
     category: "Clutch & Pouches",
-    price: 35.00,
+    price: 3301.55,
     rating: 4.6,
     reviewsCount: 64,
     images: [
@@ -111,7 +111,7 @@ export const products = [
     id: 5,
     name: "Hooghly Shopper",
     category: "Utility Bags",
-    price: 29.00,
+    price: 2735.57,
     rating: 4.8,
     reviewsCount: 120,
     images: [
@@ -138,7 +138,7 @@ export const products = [
     id: 6,
     name: "Bacchus Wine Tote",
     category: "Specialty Bags",
-    price: 45.00,
+    price: 4244.85,
     rating: 4.9,
     reviewsCount: 24,
     images: [

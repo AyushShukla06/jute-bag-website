@@ -100,7 +100,7 @@ export default function ProductTabs({
           <div className="space-y-2">
             <p className="flex items-center gap-1.5">
               <Truck size={14} className="text-earth-crimson dark:text-earth-amber" /> 
-              Carbon-neutral shipping on orders above $100.
+              Carbon-neutral shipping on orders above ₹9,433.00.
             </p>
             <p className="flex items-center gap-1.5">
               <HelpCircle size={14} className="text-earth-crimson dark:text-earth-amber" /> 

@@ -88,7 +88,7 @@ export default function Contact() {
       } else {
         setSubmitError(result.message || "Something went wrong. Please try again.");
       }
-    } catch (err) {
+    } catch {
       setSubmitError("Failed to connect to the server. Please check your network.");
     } finally {
       setIsSubmitting(false);

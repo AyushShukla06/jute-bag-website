@@ -142,7 +142,7 @@ export default function ProductCard({ product }) {
         <div className="mt-auto flex justify-between items-center pt-3 border-t border-earth-olive/5 dark:border-earth-sand/5">
           
           <span className="font-display font-bold text-xl text-earth-crimson dark:text-earth-amber">
-            ${product.price.toFixed(2)}
+            ₹{product.price.toFixed(2)}
           </span>
 
           {/* Quick Add Cart Action */}

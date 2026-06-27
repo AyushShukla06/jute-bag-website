@@ -43,8 +43,8 @@ export default function Cart() {
   // 5% eco tax for offset audits
   const ecoTax = taxableSubtotal * 0.05;
   
-  // Free shipping thresholds check (orders over $100)
-  const shipping = subtotal > 100 || subtotal === 0 ? 0 : 9.99;
+  // Free shipping thresholds check (orders over ₹9,433.00)
+  const shipping = subtotal > 9433.00 || subtotal === 0 ? 0 : 942.36;
   const total = taxableSubtotal + ecoTax + shipping;
 
   /* ==========================================================================
